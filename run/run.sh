@@ -2,11 +2,11 @@
 rm TurnoncurvE.out
 cp ../build/test/TurnoncurvE.out .
 
-PDF_LABEL="TurnOnCurve_15thre_SingleMuon_FH_Run3"
-#PDF_LABEL="TurnOnCurve_15thre_Fit_etacut_PP_0714"
+PDF_LABEL="TurnOnCurve_15thre_SingleMuon_Run3_NewCW_HotRoI"
 
-#INPUT_NTUPLE="/gpfs/fs7001/shiomi/ATLAS/Residual/Ntuple/L1TGCNtupleRun3/run/CW_MC_BE_Thre_SingleMuon_inEXTBarrel_Run3_0618forPublicPlot_Histgram.root"
-INPUT_NTUPLE="/gpfs/fs7001/shiomi/ATLAS/Residual/Ntuple/L1TGCNtupleRun3/run/CW_MC_BE_Thre_SingleMuon_inEXTBarrel_Run3_0624forPublicPlot_Histgram.root"
+INPUT_NTUPLE="/gpfs/fs7001/shiomi/ATLAS/Residual/Ntuple/L1TGCNtupleRun3/run/CW_MC_SingleMuon_NewCW_1007_Histgram.root"
+#INPUT_NTUPLE="/gpfs/fs7001/shiomi/ATLAS/Residual/Ntuple/L1TGCNtupleRun3/run/CW_MC_SingleMuon_NewCWCleaner_4_Histgram.root"
+#INPUT_NTUPLE="/gpfs/fs7001/shiomi/ATLAS/Residual/Ntuple/L1TGCNtupleRun3/run2/CW_MC_SingleMuon_NewCWCleaner_5_Histgram.root"
 
 #LIMIT_ENTRY=200
 LIMIT_ENTRY=-1

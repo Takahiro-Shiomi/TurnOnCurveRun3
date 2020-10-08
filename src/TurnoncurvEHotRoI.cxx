@@ -11,11 +11,18 @@ using namespace std;
 
 Bool_t TurnoncurvE::HotRoI(int tgc)
 {
+    /*
     int phisector = (*tgc_coin_phi)[tgc];
     int roi = (*tgc_coin_roi)[tgc];
     bool Flag = false;
-
     if(!(*tgc_coin_isForward)[tgc]){
+    */
+
+    int phisector = (*TGC_Run3_PhiSector)[tgc];
+    int roi = (*TGC_Run3_RoI)[tgc];
+    bool Flag = false;
+    if((*TGC_Run3_IsEndcap)[tgc]){
+
             if(phisector%6==1){
             if(roi==44 || roi==48 || roi==52){Flag = true;}
             //if(roi==40 || roi==44 || roi==45 || roi==48 || roi==49 || roi==52){Flag = true;}

@@ -49,7 +49,7 @@ void TurnoncurvE::DrawHist(TString pdf)
     h_turn[0]->SetLineColor(50);
     h_turn[0]->SetLineWidth(1);
     h_turn[0]->SetLineStyle(7);
-    h_turn[0]->Write();
+    //h_turn[0]->Write();
     for(int i=1;i!=15;i++){
         h_turn[i]->Draw("LP same");
         h_turn[i]->SetMarkerColor(color[i]);
@@ -57,10 +57,10 @@ void TurnoncurvE::DrawHist(TString pdf)
         h_turn[i]->SetLineColor(color[i]);
         h_turn[i]->SetLineWidth(1);
         h_turn[i]->SetLineStyle(7);
-        h_turn[i]->Write();
+        //h_turn[i]->Write();
     }
     c1->Print(pdf,"pdf");
-
+/*
     TEfficiency *pEff[15];
     if(TEfficiency::CheckConsistency(*h_tgc[0], *h_offline)){
         pEff[0] = new TEfficiency(*h_tgc[0], *h_offline);
@@ -86,6 +86,8 @@ void TurnoncurvE::DrawHist(TString pdf)
         }
     }
     c1->Print(pdf,"pdf");
+    c1->Clear();
+    */
 
     c1 -> Print( pdf + "]", "pdf" );
     delete c1;

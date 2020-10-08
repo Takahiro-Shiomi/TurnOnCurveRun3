@@ -53,7 +53,7 @@ Bool_t TurnoncurvE::Offline(int i, int j)
             float extphi=ext_mu_targetPhiVec->at(i).at(ext);
 
             //if(abs(exteta)<=1.05)continue;
-            //if(abs(exteta)>=2.4)continue;
+            //if(abs(exteta)>=1.9)continue;
             if(abs(extphi)>(TMath::Pi()))continue;
             if(abs(15280-abs(extDistance))<Z){
                 Z=abs(15280-abs(extDistance));

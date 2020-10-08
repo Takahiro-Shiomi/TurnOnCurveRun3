@@ -14,6 +14,7 @@ using namespace std;
 
 Int_t TurnoncurvE::TGC_Run3(float offline_pt)
 {
+
     double pT=99999999;
     float dR=100;
     bool HotRoIFlag=false;
@@ -21,6 +22,7 @@ Int_t TurnoncurvE::TGC_Run3(float offline_pt)
 
     for(int j=0;j!=TGC_Run3_n;j++){
         if(TGC_Run3_type->at(j)!=2)continue;
+        //if(TGC_Run3_IsEndcap->at(j)==true)continue;
 
         int station = TGC_Run3_station->at(j);
         bool flag = HotRoI(j);
@@ -43,6 +45,7 @@ Int_t TurnoncurvE::TGC_Run3(float offline_pt)
         if(TGC_pt==13){Run3_pt=13;}
         if(TGC_pt==14){Run3_pt=14;}
         if(TGC_pt==15){Run3_pt=15;}
+        if(Run3_pt>15)continue;
 
         float TGC_x=TGC_Run3_x->at(j);
         float TGC_y=TGC_Run3_y->at(j);
@@ -68,7 +71,7 @@ Int_t TurnoncurvE::TGC_Run3(float offline_pt)
     h_dr_2d->Fill(offline_pt, dR);
 
     //if(dR<=0.04){return pT;}
-    if(dR<=0.04&&StationFlag==true){return pT;}
-    //if(dR<=0.04&&HotRoIFlag==false&&StationFlag==true){return pT;}
+    //if(dR<=0.04&&StationFlag==true){return pT;}
+    if(dR<=0.04&&HotRoIFlag==true&&StationFlag==true){return pT;}
     else{return 0;}
 }

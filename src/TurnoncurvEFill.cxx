@@ -24,7 +24,8 @@ void TurnoncurvE::FillHist()
 
         //TGC Run-3 Start
         int pT = TGC_Run3(offline_pt/1000);
-        //int pT = TGC_Run2(offline_pt/1000);
+        int pTRun2 = TGC_Run2(offline_pt/1000);
+
         //TGC_Run3 End
         if(pT>=1&&pT<=15){
             for(int j=1;j<16;j++){

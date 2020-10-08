@@ -16,11 +16,11 @@ Int_t TurnoncurvE::TGC_Run2(float offline_pt)
 {
     double pT=99999999;
     float dR=100;
-    bool HotRoIFlag=false;
     bool StationFlag=false;
 
     for(int j=0;j!=tgc_coin_n;j++){
         if(tgc_coin_type->at(j)!=2)continue;
+        if(tgc_coin_isForward->at(j)==true)continue;
 
         int TGC_pt=tgc_coin_pt->at(j);
         double Run3_pt=999999; 
@@ -53,6 +53,6 @@ Int_t TurnoncurvE::TGC_Run2(float offline_pt)
     }
     h_dr_2d->Fill(offline_pt, dR);
 
-    if(dR<=0.04){return pT;}
+    if(dR<=0.045){return pT;}
     else{return 0;}
 }
