@@ -36,34 +36,52 @@ using namespace std;
 
 Bool_t TurnoncurvE::Offline(int i, int j)
 {
-    extEta=-100;
-    extPhi=-100;
+    extTGC=false;
+    extTGCEta=-100;
+    extTGCPhi=-100;
+    extRPC=false;
+    extRPCEta=-100;
+    extRPCPhi=-100;
 
     float Z=9999;
-    bool Flag=false;
+    float eta=0;
+    float phi=0;
+    int   can=0;
     if(ext_mu_type->at(i)==1){
         for(int ext=0;ext<j;ext++){
             int extTarget=ext_mu_targetVec->at(i).at(ext);
             float extDistance=ext_mu_targetDistanceVec->at(i).at(ext);
-
-            if(extTarget!=1)continue;
-            if(abs(extDistance)<15000 || abs(extDistance)>15300)continue;
-
             float exteta=ext_mu_targetEtaVec->at(i).at(ext);
             float extphi=ext_mu_targetPhiVec->at(i).at(ext);
 
-            //if(abs(exteta)<=1.05)continue;
-            //if(abs(exteta)>=1.9)continue;
-            if(abs(extphi)>(TMath::Pi()))continue;
-            if(abs(15280-abs(extDistance))<Z){
-                Z=abs(15280-abs(extDistance));
-                extEta=exteta;
-                extPhi=extphi;
-                Flag=true;
+            if(extTarget==1){
+                if(abs(extDistance)<15000 || abs(extDistance)>15300)continue;
+                if(abs(exteta)<=1.04)continue;
+                if(abs(extphi)>(TMath::Pi()))continue;
+
+                if(abs(15280-abs(extDistance))<Z){
+                    Z=abs(15280-abs(extDistance));
+                    extTGCEta=exteta;
+                    extTGCPhi=extphi;
+                    extTGC=true;
+                }
+            }
+            else if(extTarget==2){
+                if(abs(extDistance)<6500||abs(extDistance)>10500)continue;
+                if(abs(exteta)>=1.06)continue;
+                if(abs(extphi)>(TMath::Pi()))continue;
+
+                eta=eta+exteta;
+                phi=phi+extphi;
+                can=can+1;
             }
         }
     }
-    return Flag;
+    if(can>=1){
+        extRPCEta=eta/can;
+        extRPCPhi=phi/can;
+        if(abs(extRPCEta)<1.06 && abs(extRPCPhi)<=TMath::Pi()){extRPC=true;}
+    }
+    if(extTGC || extRPC){return true;}
+    else{return false;}
 }
-
-

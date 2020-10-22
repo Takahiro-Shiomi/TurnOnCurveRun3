@@ -213,16 +213,23 @@ public :
    TBranch        *b_TGC_Run3_Phi;   //!
 
    //Parameters
-   float extEta;
-   float extPhi;
+   float extTGCEta;
+   float extTGCPhi;
+   float extRPCEta;
+   float extRPCPhi;
+   bool  extRPC;
+   bool  extTGC;
 
 
    //Histgram
-   TH1D* h_offline;
-   TH1D* h_tgc[15];
-   TH1D* h_turn[15];
-   TH2D* h_dr_2d;
-   TH1D* h_dr_1d;
+   TH1D* tgc_offline;
+   TH1D* rpc_offline;
+   TH1D* h_tgc;
+   TH1D* tgc_turn;
+   TH1D* h_rpc;
+   TH1D* rpc_turn;
+   TH2D* tgc_dr;
+   TH2D* rpc_dr;
 
    TurnoncurvE(TTree *tree=0);
    virtual ~TurnoncurvE();
@@ -236,6 +243,7 @@ public :
    virtual Bool_t   Offline(int i, int j);
    virtual Bool_t   HotRoI(int tgc);
    virtual Int_t    TGC_Run3(float offline_pt);
+   virtual Int_t    RPC_Run3(float offline_pt);
    virtual Int_t    TGC_Run2(float offline_pt);
    virtual void     DrawHist(TString pdf);
    virtual void     EndHist();

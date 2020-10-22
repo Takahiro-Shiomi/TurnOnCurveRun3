@@ -16,78 +16,44 @@ void TurnoncurvE::DrawHist(TString pdf)
     c1->SetTopMargin(0.20);
     c1->Print(pdf + "[", "pdf");
 
-    h_dr_2d->Draw("colz");
+    tgc_dr->Draw("colz");
     c1->Print(pdf,"pdf");
 
-    c1->Clear();
-    c1->Divide(3,3);
-    for(int i=0;i!=15;i++){
-        int Num=(i+1)%9;
-        if(Num==0){Num=9;}
-        c1->cd(Num);
-        h_offline->Draw();
-        h_offline->SetFillColor(kGreen);
-        h_tgc[i]->Draw("same");
-        h_tgc[i]->SetFillColor(kYellow);
-        h_offline->GetXaxis()->SetRangeUser(0,15);
-        if(Num==9 || i==14){
-            c1->Print(pdf,"pdf");
-            c1->Clear();
-            c1->Divide(3,3);
-        }
-    }
-    c1->Clear();
+    rpc_dr->Draw("colz");
+    c1->Print(pdf,"pdf");
 
-    int color[15];
-    for(int j=0;j<15;j++){
-        h_turn[j]->Divide(h_tgc[j],h_offline,1,1);
-        color[j]=49-j;
-    }
-    h_turn[0]->Draw("LP");
-    h_turn[0]->SetMarkerColor(50);
-    h_turn[0]->SetMarkerStyle(8);
-    h_turn[0]->SetLineColor(50);
-    h_turn[0]->SetLineWidth(1);
-    h_turn[0]->SetLineStyle(7);
-    //h_turn[0]->Write();
-    for(int i=1;i!=15;i++){
-        h_turn[i]->Draw("LP same");
-        h_turn[i]->SetMarkerColor(color[i]);
-        h_turn[i]->SetMarkerStyle(8);
-        h_turn[i]->SetLineColor(color[i]);
-        h_turn[i]->SetLineWidth(1);
-        h_turn[i]->SetLineStyle(7);
-        //h_turn[i]->Write();
-    }
+    tgc_turn->Divide(h_tgc,tgc_offline,1,1); 
+    rpc_turn->Divide(h_rpc,rpc_offline,1,1);
+
+    TF1 *TGC_erf = new TF1("TGC_erf","[0]+0.5*[1]*(1+TMath::Erf((x-[2])/(TMath::Sqrt(x)*[3])))",0,40);
+    TGC_erf->SetParameter(0,0);  //offset
+    TGC_erf->SetParameter(1,1);  //plateau
+    TGC_erf->SetParameter(2,12); //halfpoint
+    TGC_erf->SetParameter(3,1);  //slope
+
+    tgc_turn->Draw("LP"); 
+    tgc_turn->SetMarkerColor(50);
+    tgc_turn->SetMarkerStyle(8);
+    tgc_turn->SetLineColor(50);
+    tgc_turn->SetLineWidth(1);
+    tgc_turn->SetLineStyle(7);
+    tgc_turn->Fit("TGC_erf","","",0,40);
     c1->Print(pdf,"pdf");
-/*
-    TEfficiency *pEff[15];
-    if(TEfficiency::CheckConsistency(*h_tgc[0], *h_offline)){
-        pEff[0] = new TEfficiency(*h_tgc[0], *h_offline);
-        pEff[0]->Draw("ALP");
-        pEff[0]->SetTitle(";p^{offline}_{T} [GeV];Efficiency");
-        pEff[0]->SetMarkerColor(color[0]);
-        pEff[0]->SetMarkerStyle(8);
-        pEff[0]->SetLineColor(color[0]);
-        pEff[0]->SetLineWidth(1);
-        pEff[0]->SetLineStyle(7);
-        pEff[0]->Write();
-    }
-    for(int i=1;i!=15;i++){
-        if(TEfficiency::CheckConsistency(*h_tgc[i], *h_offline)){
-            pEff[i] = new TEfficiency(*h_tgc[i], *h_offline);
-            pEff[i]->Draw("LP same");
-            pEff[i]->SetMarkerColor(color[i]);
-            pEff[i]->SetMarkerStyle(8);
-            pEff[i]->SetLineColor(color[i]);
-            pEff[i]->SetLineWidth(1);
-            pEff[i]->SetLineStyle(7);
-            pEff[i]->Write();
-        }
-    }
+
+    TF1 *RPC_erf = new TF1("RPC_erf","[0]+0.5*[1]*(1+TMath::Erf((x-[2])/(TMath::Sqrt(x)*[3])))",0,40);
+    RPC_erf->SetParameter(0,0);
+    RPC_erf->SetParameter(1,1);
+    RPC_erf->SetParameter(2,13);
+    RPC_erf->SetParameter(3,1);
+
+    rpc_turn->Draw("LP"); 
+    rpc_turn->SetMarkerColor(50);
+    rpc_turn->SetMarkerStyle(8);
+    rpc_turn->SetLineColor(50);
+    rpc_turn->SetLineWidth(1);
+    rpc_turn->SetLineStyle(7);
+    rpc_turn->Fit("RPC_erf","","",0,40);
     c1->Print(pdf,"pdf");
-    c1->Clear();
-    */
 
     c1 -> Print( pdf + "]", "pdf" );
     delete c1;

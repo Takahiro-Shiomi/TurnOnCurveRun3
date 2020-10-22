@@ -17,22 +17,27 @@ void TurnoncurvE::FillHist()
         float offline_pt=muon_pt->at(i);
         float offline_eta =muon_eta->at(i);
         float offline_phi =muon_phi->at(i);
-        if(abs(offline_eta)<=1.05){continue;}
-        if(abs(offline_eta)>=2.4){continue;}
-        if(Offline(i, ext_mu_size->at(i))==false)continue;
-        h_offline->Fill(offline_pt/1000);
+        if(!Offline(i, ext_mu_size->at(i)))continue;
 
-        //TGC Run-3 Start
-        int pT = TGC_Run3(offline_pt/1000);
-        int pTRun2 = TGC_Run2(offline_pt/1000);
-
-        //TGC_Run3 End
-        if(pT>=1&&pT<=15){
-            for(int j=1;j<16;j++){
-                if(pT>=j){
-                    h_tgc[j-1]->Fill(offline_pt/1000);
-                }
-            }
+        int TGCpT = 0;
+        bool isTGC = false;
+        if(extTGC){
+            tgc_offline->Fill(offline_pt/1000);
+            TGCpT = TGC_Run3(offline_pt/1000);
+            //pT = TGC_Run2(offline_pt/1000);
+            if(TGCpT>0){isTGC = true;}
         }
+
+        int RPCpT = 0;
+        bool isRPC = false;
+        if(extRPC){
+            rpc_offline->Fill(offline_pt/1000);
+            RPCpT = RPC_Run3(offline_pt/1000);
+            //pT = RPC_Run2(offline_pt/1000);
+            if(RPCpT>0){isRPC = true;}
+        }
+
+        if(isTGC && (TGCpT>=11&&TGCpT<=15)){h_tgc->Fill(offline_pt/1000);}
+        if(isRPC && RPCpT==6){h_rpc->Fill(offline_pt/1000);}
     }
 }

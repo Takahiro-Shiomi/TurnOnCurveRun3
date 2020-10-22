@@ -17,6 +17,7 @@ add_library(src
     TurnoncurvEHist.cxx
     TurnoncurvEoffline.cxx
     TurnoncurvETGCRun3.cxx
+    TurnoncurvERPCRun3.cxx
     TurnoncurvETGCRun2.cxx
     TurnoncurvEHotRoI.cxx
 )

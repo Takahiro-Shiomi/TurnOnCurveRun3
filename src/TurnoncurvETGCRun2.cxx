@@ -43,15 +43,15 @@ Int_t TurnoncurvE::TGC_Run2(float offline_pt)
         float delta_eta;
         float delta_phi;
         float TGC_dR;
-        delta_eta=(extEta-TGC_eta);
-        delta_phi=TVector2::Phi_mpi_pi(extPhi-TGC_phi);
+        delta_eta=(extTGCEta-TGC_eta);
+        delta_phi=TVector2::Phi_mpi_pi(extTGCPhi-TGC_phi);
         TGC_dR=sqrt(delta_eta*delta_eta + delta_phi*delta_phi);
         if(TGC_dR<dR){
             dR=TGC_dR;
             pT=Run3_pt;
         }
     }
-    h_dr_2d->Fill(offline_pt, dR);
+    tgc_dr->Fill(offline_pt, dR);
 
     if(dR<=0.045){return pT;}
     else{return 0;}
