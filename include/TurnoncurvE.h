@@ -219,10 +219,9 @@ public :
 
    //Histgram
    TH1D* h_offline;
-   TH1D* h_tgc[15];
-   TH1D* h_turn[15];
-   TH2D* h_dr_2d;
-   TH1D* h_dr_1d;
+   TH1D* h_rpc[6];
+   TH1D* h_turn[6];
+   TH2D* h_dr;
 
    TurnoncurvE(TTree *tree=0);
    virtual ~TurnoncurvE();
@@ -235,8 +234,7 @@ public :
    virtual void     FillHist();
    virtual Bool_t   Offline(int i, int j);
    virtual Bool_t   HotRoI(int tgc);
-   virtual Int_t    TGC_Run3(float offline_pt);
-   virtual Int_t    TGC_Run2(float offline_pt);
+   virtual Int_t    RPC_Run3(float offline_pt);
    virtual void     DrawHist(TString pdf);
    virtual void     EndHist();
    virtual Bool_t   Notify();
